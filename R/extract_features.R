@@ -577,9 +577,12 @@ extract_features <- function(examples,
   }
 
   old_verbosity_level <- tensorflow::tf$logging$get_verbosity()
+  # logger <- tensorflow::tf$get_logger()
+  # old_verbosity_level <- logger$getEffectiveLevel()
   old_sys_log_level <- Sys.getenv("TF_CPP_MIN_LOG_LEVEL")
   if (!verbose) {
     tensorflow::tf$logging$set_verbosity(tensorflow::tf$logging$FATAL)
+    # logger$setLevel(50)
     Sys.setenv(TF_CPP_MIN_LOG_LEVEL = "3")
   }
 
@@ -722,6 +725,7 @@ extract_features <- function(examples,
 
   # restore original verbosity levels
   tensorflow::tf$logging$set_verbosity(old_verbosity_level)
+  # logger$setLevel(old_verbosity_level)
   Sys.setenv(TF_CPP_MIN_LOG_LEVEL = old_sys_log_level)
 
   # Iterate one more time to let python finish and be happy.
